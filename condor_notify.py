@@ -20,7 +20,7 @@ logger.addHandler(ch)
 
 
 def process_arguments():
-    logger.info('Process command line arguments')
+    logger.info('Process command line arguments:')
     parser = argparse.ArgumentParser(description="Send push notifications of condor job status")
     parser.add_argument('condor_user', type=str,
             help="Condor user name given to `condor_q USERNAME`")
@@ -33,6 +33,12 @@ def process_arguments():
     parser.add_argument('--sleep', type=float, default=10,
             help="Sleep duration during checking condor job status")
     args = parser.parse_args()
+
+    logger.info('Condor user: {}'.format(args.condor_user))
+    logger.info('Pushover user: {}'.format(args.pushover_user))
+    logger.info('Pushover token: {}'.format(args.pushover_token))
+    logger.info('Pushover URL: {}'.format(args.pushover_url))
+    logger.info('Sleep: {}s'.format(args.sleep))
 
     return args
 
@@ -74,6 +80,7 @@ def send_notification(args, status):
     message = '{}\n'.format(datetime.now())
     for key in d:
         message += '{0} : {1}\n'.format(key, d[key])
+    message = message+status
     message = message.strip()
 
     logger.info('Send notification:\n{}'.format(message))
