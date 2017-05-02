@@ -1,6 +1,6 @@
 # Push notifications on your Android phone for HTCondor jobs on completion
 
-It's a single Python script, which parses the `condor_q USERNAME` output and sends a push notification to your phone using the [Pushover](www.pushover.net) service. Try `./condor_notify.py --help` for more information.
+It's a single Python script, which parses the `condor_q USERNAME` output and sends a push notification to your phone using the [Pushover](https://www.pushover.net) service. Try `./condor_notify.py --help` for more information.
 
 **Usage:**
 
