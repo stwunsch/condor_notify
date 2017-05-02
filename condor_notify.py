@@ -10,7 +10,7 @@ from datetime import datetime
 import json
 
 
-logger = logging.getLogger('condor_monitor')
+logger = logging.getLogger('condor_notify')
 logger.setLevel(logging.DEBUG)
 ch = logging.StreamHandler()
 ch.setLevel(logging.DEBUG)
@@ -23,14 +23,14 @@ def process_arguments():
     logger.info('Process command line arguments')
     parser = argparse.ArgumentParser(description="Send push notifications of condor job status")
     parser.add_argument('condor_user', type=str,
-            help="Condor user name")
+            help="Condor user name given to `condor_q USERNAME`")
     parser.add_argument('pushover_user', type=str,
             help="Pushover user key")
     parser.add_argument('pushover_token', type=str,
             help="Pushover application token")
     parser.add_argument('--pushover-url', type=str, default='https://api.pushover.net/1/messages.json',
             help="Pushover HTTP request URL")
-    parser.add_argument('--sleep', type=float, default=2,
+    parser.add_argument('--sleep', type=float, default=10,
             help="Sleep duration during checking condor job status")
     args = parser.parse_args()
 
