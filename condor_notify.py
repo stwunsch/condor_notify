@@ -67,8 +67,8 @@ def check_status(status, status_new):
     if d == None or d_new == None:
         return False
 
-    if d_new['jobs'] < d['jobs']:
-        logging.debug('Less new jobs detected: {} < {}'.format(
+    if d_new['jobs'] == 0 and d['jobs'] > 0:
+        logging.debug('All jobs are done or removed: {}==0, {}>0'.format(
             d_new['jobs'], d['jobs']))
         return True
 
