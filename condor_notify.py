@@ -67,9 +67,9 @@ def check_status(status, status_new):
     if d == None or d_new == None:
         return False
 
-    if d_new['jobs'] == 0 and d['jobs'] > 0:
-        logging.debug('All jobs are done or removed: {}==0, {}>0'.format(
-            d_new['jobs'], d['jobs']))
+    if d_new['jobs'] == d_new['held'] and d['running'] > 0:
+        logging.debug('All jobs are done or removed: {}=={}, {}>0'.format(
+            d_new['jobs'], d_new['held'], d['jobs']))
         return True
 
     if d_new['running'] == 0 and d['running'] != 0 and d_new['idle'] == 0:
