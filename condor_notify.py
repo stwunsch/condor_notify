@@ -10,10 +10,11 @@ from datetime import datetime
 import json
 
 
+log_level = logging.DEBUG
 logger = logging.getLogger('condor_notify')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(log_level)
 ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
+ch.setLevel(log_level)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
@@ -44,7 +45,7 @@ def process_arguments():
 
 
 def get_status(args):
-    status = subprocess.check_output(['condor_q', args.condor_user], shell=True)
+    status = subprocess.check_output(['condor_q', args.condor_user])
     return status
 
 
@@ -67,9 +68,14 @@ def check_status(status, status_new):
         return False
 
     if d_new['jobs'] < d['jobs']:
+        logging.debug('Less new jobs detected: {} < {}'.format(
+            d_new['jobs'], d['jobs']))
         return True
 
     if d_new['running'] == 0 and d['running'] != 0 and d_new['idle'] == 0:
+        logging.debug('All running jobs are done and no idle jobs:'+\
+            '{}==0, {}!=0, {}==0'.format(
+            d_new['running'], d['running'], d_new['idle']))
         return True
 
     return False
